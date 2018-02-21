@@ -1,0 +1,65 @@
+# These are the default stages.
+# You don't need to explicitly define them.
+before_script:
+  - echo "Before script section"
+  - echo "Assuring maven path"
+  - source /etc/profile.d/maven.sh
+stages:
+  - build
+  - sonar_analysis
+  - artifact
+  - deploy
+# This is the name of the job.
+# You can choose it freely.
+maven_build:
+  # A job is always executed within a stage.
+  # If no stage is set, it defaults to 'test'.
+  stage: build
+  # Since we require Maven for this job,
+  # we can restrict the job to runners with a certain tag.
+  # Of course, it is our duty to actually configure a runner
+  # with the tag 'maven' and a working maven installation
+  tags:
+    - maven
+  # Here you can execute arbitrate terminal commands.
+  # If any of the commands returns a non zero exit code the job fails.
+  script:
+    - echo "Building project with maven"
+    - mvn clean install
+  #
+  artifacts:
+    paths:
+    - target/*.war
+#    - /home/gitlab-runner/.m2/repository/ai/elimu/webapp/2.0.46-SNAPSHOT/*.war
+before_script:
+  - echo "Before script section"
+  - echo "sonar analysis without maven command"
+  - source /etc/profile.d/sonar_runner.sh
+
+sonar_analysis:
+  stage: sonar_analysis
+  tags:
+    - maven
+  script:
+    - echo "Sonar Analysis through sonar scanner"
+    - sonar-runner -Dsonar.login=$SONAR_ADMIN -Dsonar.password=$SONAR_PASSWORD
+#    - sonar-runner -h
+
+before_script:
+  - echo "Disabling proxy"
+  - export http_proxy=''
+  - export https_proxy=''
+  
+Artifact:
+  stage: artifact
+  script:
+    - echo "Deploying on Nexus artifactory "
+    - curl -k -u $NEXUS_USER:$NEXUS_PASSWORD --upload-file target/*.war $NEXUS_URL
+
+Deployment:
+  stage: deploy
+  script:
+     - echo "Deploying on Tomcat"
+     - echo " scp command for deployment initiated "
+     - echo $CI_PIPELINE_ID
+     - scp target/*.war $TOMCAT_SERVER/webapp-sample.war

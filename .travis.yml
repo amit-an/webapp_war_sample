@@ -1,0 +1,11 @@
+language: java
+
+jdk:
+  - oraclejdk8
+
+script:
+  mvn clean install
+
+notifications:
+  email: false
+  slack: elimu-ai:5hNcmHPFkAETjJZjrkBlNTxr

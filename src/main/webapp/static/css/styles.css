@@ -1,0 +1,67 @@
+html[lang="ar"] {
+    direction: rtl;
+}
+html[lang="ar"] nav {
+    direction: ltr;
+}
+
+body {
+    background: #EEE;
+}
+
+#logo-container img {
+    max-height: 1.2em;
+    vertical-align: text-bottom;
+}
+
+#index-banner {
+    background-color: rgba(0,0,0, .5);
+    background-image: url(../../static/img/banner-en.jpg);
+    background-size: cover;
+}
+html[lang="ar"] #index-banner {
+    background-image: url(../../static/img/banner-ar.jpg);
+}
+html[lang="es"] #index-banner {
+    background-image: url(../../static/img/banner-es.jpg);
+}
+
+.container > .section {
+    min-height: 400px;
+}
+
+.container h1 {
+    font-family: "Amaranth";
+    text-shadow: 1px 1px rgba(0,0,0, .8), 
+        0 -1rem 3rem rgba(0,0,0, .8), 
+        2rem 0 3rem rgba(0,0,0, .8), 
+        0 1rem 3rem rgba(0,0,0, .8), 
+        -2rem 0 3rem rgba(0,0,0, .8);
+}
+.container h1 span {
+    font-weight: 300;
+}
+#index-banner h5 {
+    background-color: rgba(0,0,0, .5);
+    box-shadow: 0 0 1rem rgba(0,0,0, .5);
+    text-shadow: 1px 1px #000;
+    padding: 1rem;
+    border-radius: 2px;
+}
+
+img,
+video {
+    max-width: 100%;
+}
+
+#welcomePage .card-title {
+    text-shadow: 1px 1px rgba(0,0,0, .8), 
+        0 -1rem 3rem rgba(0,0,0, .8), 
+        2rem 0 3rem rgba(0,0,0, .8), 
+        0 1rem 3rem rgba(0,0,0, .8), 
+        -2rem 0 3rem rgba(0,0,0, .8);
+}
+
+.side-nav .grey-text {
+    margin-left: 1rem;
+}
